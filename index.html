@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nazmul Islam | Digital Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+
+        :root {
+            --brand-green: #00863f;
+            --deep-overlay: rgba(10, 20, 15, 0.9);
+            --accent-glow: rgba(0, 134, 63, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #030705;
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        /* Ambient Background - Cinematic Atmosphere */
+        .ambient-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: 
+                radial-gradient(circle at 10% 20%, var(--accent-glow) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 40%);
+            filter: blur(100px);
+        }
+
+        /* The Main Stage - Responsive Container */
+        .stage {
+            width: 100%;
+            height: 100%;
+            max-width: 480px;
+            max-height: 900px;
+            position: relative;
+            background: #050a08;
+            border-left: 1px solid rgba(255,255,255,0.03);
+            border-right: 1px solid rgba(255,255,255,0.03);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 100px 150px -50px rgba(0,0,0,1);
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Cinematic Hero Section */
+        .hero-wrap {
+            position: relative;
+            height: 60%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 25%;
+            filter: contrast(1.1) brightness(0.9);
+            animation: slowPan 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes slowPan {
+            from { transform: scale(1.0) translateY(0); }
+            to { transform: scale(1.15) translateY(-20px); }
+        }
+
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, 
+                rgba(5, 10, 8, 0.4) 0%, 
+                transparent 30%, 
+                transparent 60%, 
+                #050a08 100%);
+        }
+
+        /* Branding Overlay */
+        .top-nav {
+            position: absolute;
+            top: 2.5rem;
+            width: 100%;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bkb-logo {
+            width: 40px;
+            height: 40px;
+            filter: brightness(0) invert(1); /* Forces logo to white */
+        }
+
+        /* Vertical Meta Info */
+        .side-meta {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            opacity: 0.2;
+            z-index: 40;
+        }
+
+        .line { width: 1px; height: 100px; background: white; }
+        .meta-text { writing-mode: vertical-rl; text-transform: uppercase; font-size: 8px; letter-spacing: 5px; }
+
+        /* Typography Reveal */
+        .content-panel {
+            flex: 1;
+            padding: 0 2.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            z-index: 60;
+            margin-top: -80px; /* Pulls text onto the image for cinematic overlap */
+        }
+
+        .name-title {
+            font-size: clamp(3rem, 10vw, 4.5rem);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -3px;
+            margin-bottom: 0.75rem;
+            color: #fff;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--brand-green);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 2.5rem;
+        }
+
+        .role-badge::after {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: var(--brand-green);
+        }
+
+        /* Interaction Grid */
+        .action-rail {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 2rem;
+        }
+
+        .action-link {
+            aspect-ratio: 1/1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #fff;
+            transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .action-link:hover {
+            background: var(--brand-green);
+            border-color: var(--brand-green);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 134, 63, 0.3);
+        }
+
+        .action-link:active {
+            transform: scale(0.9);
+        }
+
+        /* Primary Button */
+        .main-cta {
+            background: #ffffff;
+            color: #000;
+            padding: 1.5rem;
+            border-radius: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 3px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .main-cta:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(255,255,255,0.1);
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 10px;
+            color: rgba(255,255,255,0.15);
+            margin-top: 2.5rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Responsiveness for different heights */
+        @media (max-height: 800px) {
+            .hero-wrap { height: 50%; }
+            .content-panel { padding-bottom: 2rem; }
+            .name-title { font-size: 3.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .stage { border: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ambient-bg"></div>
+
+    <main class="stage" id="mainStage">
+        <!-- Floating Brand Info -->
+        <nav class="top-nav">
+            <div class="logo-box">
+                <img src="Logo.png" class="bkb-logo" alt="BKB" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2830/2830284.png'">
+            </div>
+            <div class="text-[10px] font-bold tracking-[6px] text-white/40 uppercase">
+                Official Digital Card
+            </div>
+        </nav>
+
+        <!-- Vertical Identity -->
+        <div class="side-meta">
+            <span class="meta-text">Digital Authority</span>
+            <div class="line"></div>
+            <span class="meta-text">BKB &bull; 2026</span>
+        </div>
+
+        <!-- Cinema Hero -->
+        <div class="hero-wrap">
+            <img src="Nazmul.jpg" class="hero-img" alt="Nazmul Islam" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop'">
+            <div class="hero-vignette"></div>
+        </div>
+
+        <!-- Identity Content -->
+        <section class="content-panel">
+            <div class="text-group">
+                <p class="text-[10px] uppercase tracking-[8px] text-white/30 mb-4 font-light">Banking Professional</p>
+                <h1 class="name-title">Nazmul<br>Islam</h1>
+                <div class="role-badge">Senior Officer</div>
+            </div>
+
+            <!-- Interaction Grid: Phone, WhatsApp, Facebook, Email -->
+            <div class="action-rail">
+                <a href="tel:+8801711970154" class="action-link" title="Phone">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+                <a href="https://wa.me/8801711970154" class="action-link" title="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="https://facebook.com/nazmul.islam.539350" class="action-link" title="Facebook">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="mailto:nazmulislambkb@gmail.com" class="action-link" title="Email">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+            </div>
+
+            <!-- High Impact Call to Action -->
+            <div class="main-cta" onclick="handleSave()">
+                <i class="fa-solid fa-plus text-xs"></i>
+                Save Contact
+            </div>
+
+            <p class="footer-note">
+                Bangladesh Krishi Bank
+            </p>
+        </section>
+    </main>
+
+    <script>
+        // Smooth Save Interaction
+        function handleSave() {
+            const cta = document.querySelector('.main-cta');
+            const original = cta.innerHTML;
+            
+            cta.style.background = '#00863f';
+            cta.style.color = '#fff';
+            cta.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Syncing...';
+            
+            setTimeout(() => {
+                cta.innerHTML = '<i class="fa-solid fa-check"></i> Success';
+                setTimeout(() => {
+                    cta.style.background = '#fff';
+                    cta.style.color = '#000';
+                    cta.innerHTML = original;
+                }, 2000);
+            }, 1200);
+        }
+
+        // Parallax Desktop Motion
+        const stage = document.getElementById('mainStage');
+        document.addEventListener('mousemove', (e) => {
+            if (window.innerWidth > 1024) {
+                const x = (window.innerWidth / 2 - e.pageX) / 40;
+                const y = (window.innerHeight / 2 - e.pageY) / 40;
+                stage.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            }
+        });
+
+        // Handle Touch Device Orientation for Subtle Depth
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', (e) => {
+                const x = e.gamma / 5;
+                const y = e.beta / 5;
+                // Subtle shift based on phone tilt
+                if(window.innerWidth < 1024) {
+                    const hero = document.querySelector('.hero-img');
+                    if(hero) hero.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+                }
+            }, true);
+        }
+    </script>
+</body>
+</html>
