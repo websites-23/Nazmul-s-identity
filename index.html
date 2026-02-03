@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Nazmul Islam | Digital Card</title>
+    <title>Mohammad Nazmul Islam | Cinematic Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -115,7 +115,7 @@
         .bkb-logo {
             width: 40px;
             height: 40px;
-            filter: brightness(0) invert(1); /* Forces logo to white */
+            filter: brightness(0) invert(1); 
         }
 
         /* Vertical Meta Info */
@@ -144,15 +144,15 @@
             justify-content: flex-end;
             position: relative;
             z-index: 60;
-            margin-top: -80px; /* Pulls text onto the image for cinematic overlap */
+            margin-top: -80px; 
         }
 
         .name-title {
-            font-size: clamp(3rem, 10vw, 4.5rem);
+            font-size: clamp(2.2rem, 7vw, 3rem); /* Adjusted for better scale */
             font-weight: 900;
-            line-height: 0.85;
-            letter-spacing: -3px;
-            margin-bottom: 0.75rem;
+            line-height: 1.1; /* Slightly increased for readability with long names */
+            letter-spacing: -1.5px;
+            margin-bottom: 0.85rem;
             color: #fff;
             text-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
@@ -162,16 +162,16 @@
             align-items: center;
             gap: 12px;
             color: var(--brand-green);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            letter-spacing: 5px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 2.5rem;
         }
 
         .role-badge::after {
             content: '';
-            width: 40px;
+            width: 30px;
             height: 1px;
             background: var(--brand-green);
         }
@@ -226,6 +226,7 @@
             gap: 15px;
             cursor: pointer;
             transition: all 0.4s ease;
+            user-select: none;
         }
 
         .main-cta:hover {
@@ -246,7 +247,7 @@
         @media (max-height: 800px) {
             .hero-wrap { height: 50%; }
             .content-panel { padding-bottom: 2rem; }
-            .name-title { font-size: 3.5rem; }
+            .name-title { font-size: 2.5rem; }
         }
 
         @media (max-width: 480px) {
@@ -259,7 +260,6 @@
     <div class="ambient-bg"></div>
 
     <main class="stage" id="mainStage">
-        <!-- Floating Brand Info -->
         <nav class="top-nav">
             <div class="logo-box">
                 <img src="Logo.png" class="bkb-logo" alt="BKB" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2830/2830284.png'">
@@ -269,28 +269,24 @@
             </div>
         </nav>
 
-        <!-- Vertical Identity -->
         <div class="side-meta">
             <span class="meta-text">Digital Authority</span>
             <div class="line"></div>
             <span class="meta-text">BKB &bull; 2026</span>
         </div>
 
-        <!-- Cinema Hero -->
         <div class="hero-wrap">
-            <img src="Nazmul.jpg" class="hero-img" alt="Nazmul Islam" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop'">
+            <img src="Nazmul.jpg" class="hero-img" alt="Mohammad Nazmul Islam" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop'">
             <div class="hero-vignette"></div>
         </div>
 
-        <!-- Identity Content -->
         <section class="content-panel">
             <div class="text-group">
                 <p class="text-[10px] uppercase tracking-[8px] text-white/30 mb-4 font-light">Banking Professional</p>
-                <h1 class="name-title">Nazmul<br>Islam</h1>
+                <h1 class="name-title">Mohammad<br>Nazmul Islam</h1>
                 <div class="role-badge">Senior Officer</div>
             </div>
 
-            <!-- Interaction Grid: Phone, WhatsApp, Facebook, Email -->
             <div class="action-rail">
                 <a href="tel:+8801711970154" class="action-link" title="Phone">
                     <i class="fa-solid fa-phone"></i>
@@ -306,9 +302,9 @@
                 </a>
             </div>
 
-            <!-- High Impact Call to Action -->
-            <div class="main-cta" onclick="handleSave()">
-                <i class="fa-solid fa-plus text-xs"></i>
+            <!-- Primary Action with vCard Download -->
+            <div class="main-cta" onclick="handleSaveContact()">
+                <i class="fa-solid fa-user-plus text-xs"></i>
                 Save Contact
             </div>
 
@@ -319,23 +315,69 @@
     </main>
 
     <script>
-        // Smooth Save Interaction
-        function handleSave() {
+        /**
+         * Generates and triggers a vCard (.vcf) download
+         */
+        function handleSaveContact() {
             const cta = document.querySelector('.main-cta');
             const original = cta.innerHTML;
             
+            // UI Feedback
             cta.style.background = '#00863f';
             cta.style.color = '#fff';
-            cta.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Syncing...';
+            cta.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
             
-            setTimeout(() => {
-                cta.innerHTML = '<i class="fa-solid fa-check"></i> Success';
+            // Contact Data
+            const contact = {
+                firstName: 'Mohammad Nazmul',
+                lastName: 'Islam',
+                email: 'nazmulislambkb@gmail.com',
+                phone: '+8801711970154',
+                org: 'Bangladesh Krishi Bank',
+                title: 'Senior Officer'
+            };
+
+            // Build vCard 3.0 String
+            const vcard = [
+                'BEGIN:VCARD',
+                'VERSION:3.0',
+                `N:${contact.lastName};${contact.firstName};;;`,
+                `FN:${contact.firstName} ${contact.lastName}`,
+                `ORG:${contact.org}`,
+                `TITLE:${contact.title}`,
+                `TEL;TYPE=CELL,VOICE:${contact.phone}`,
+                `EMAIL;TYPE=PREF,INTERNET:${contact.email}`,
+                'REV:' + new Date().toISOString(),
+                'END:VCARD'
+            ].join('\n');
+
+            // Create Blob and Trigger Download
+            try {
+                const blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `Mohammad_Nazmul_Islam.vcf`);
+                document.body.appendChild(link);
+                link.click();
+                
+                // Cleanup
                 setTimeout(() => {
-                    cta.style.background = '#fff';
-                    cta.style.color = '#000';
-                    cta.innerHTML = original;
-                }, 2000);
-            }, 1200);
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);
+                    
+                    cta.innerHTML = '<i class="fa-solid fa-check"></i> Ready to Save';
+                    setTimeout(() => {
+                        cta.style.background = '#fff';
+                        cta.style.color = '#000';
+                        cta.innerHTML = original;
+                    }, 2000);
+                }, 100);
+
+            } catch (err) {
+                console.error('Error saving contact:', err);
+                cta.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Error';
+            }
         }
 
         // Parallax Desktop Motion
@@ -348,12 +390,11 @@
             }
         });
 
-        // Handle Touch Device Orientation for Subtle Depth
+        // Device Orientation for mobile depth
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', (e) => {
                 const x = e.gamma / 5;
                 const y = e.beta / 5;
-                // Subtle shift based on phone tilt
                 if(window.innerWidth < 1024) {
                     const hero = document.querySelector('.hero-img');
                     if(hero) hero.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
